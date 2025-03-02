@@ -1,15 +1,18 @@
 const myLibrary = [];
 
-function Book (title, author, pages, read){
+class Book{
+  constructor(title, author, pages, read){
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
-}
+  }
 
-Book.prototype.toggleRead = function() {
+toggleRead(){
   this.read = !this.read;
-};
+  console.log(`${this.title} read status: ${this.read ? "Yes" : "No"}`);
+  }
+}
 
   // Function to display books in the DOM
   function displayBooks() {
@@ -21,7 +24,7 @@ Book.prototype.toggleRead = function() {
       bookCard.classList.add('book-card');
       bookCard.dataset.index = index;
 
-      bookCard.innerHTML = `e
+      bookCard.innerHTML = `
         <h3>${book.title}</h3>
         <p>Author: ${book.author}</p>
         <p>Pages: ${book.pages}</p>
@@ -38,7 +41,7 @@ Book.prototype.toggleRead = function() {
 
       // Add remove book event
       bookCard.querySelector('.remove-btn').addEventListener('click', () => {
-        myLibrary.splice(index, 1); // Remove book from array
+        myLibrary.splice(myLibrary.indexOf(book), 1); // Remove book from array
         displayBooks(); // Update DOM
       });
 
@@ -61,7 +64,7 @@ Book.prototype.toggleRead = function() {
 
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
-    const pages = document.getElementById('pages').value;
+    const pages = Number(document.getElementById('pages').value);
     const read = document.getElementById('read').checked;
 
     const newBook = new Book(title, author, pages, read);
